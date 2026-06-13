@@ -94,14 +94,43 @@ def leap_year(year: int) -> bool:
     if year % 4 == 0:  # years divisible by 4 are leap years
         return True
     return False   #all other years are not leap years 
-
 def valid_date(date: str) -> bool:
-    "check validity of date and return True if valid"
-    ...
+    """Check validity of date and return True if valid."""
+    if len(date) != 10:
+        return False
+
+    if date[4] != "-" or date[7] != "-":
+        return False
+
+    year = int(date[0:4])
+    month = int(date[5:7])
+    day = int(date[8:10])
+
+    if month < 1 or month > 12:
+        return False
+
+    if day < 1 or day > mon_max(month, year):
+        return False
+
+    return True
 
 def day_count(start_date: str, stop_date: str) -> int:
-    "Loops through range of dates, and returns number of weekend days"
-    ...
+    """Loops through range of dates, and returns number of weekend days."""
+    weekend_count = 0
+    current_date = start_date
 
+    while current_date != after(stop_date):
+        year = int(current_date[0:4])
+        month = int(current_date[5:7])
+        date = int(current_date[8:10])
+
+        week_day = day_of_week(year, month, date)
+
+        if week_day == "sat" or week_day == "sun":
+            weekend_count += 1
+
+        current_date = after(current_date)
+
+    return weekend_count
 if __name__ == "__main__":
     ...
